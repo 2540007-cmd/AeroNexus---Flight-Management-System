@@ -1,19 +1,26 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include <vector>
 #include <string>
 using namespace std;
 
-class Database {
-protected:
-    vector<string> records;
-public:
-    Database();
-    virtual ~Database();
-    virtual void addRecord(const string& record) = 0;
-    virtual void removeRecord(const string& record) = 0;
-    virtual vector<string> getRecords() const;
+class Database{
+    protected:
+        // CSV file handling info
+        string fileName;          // Main CSV file name
+        int pointer;           // Current number of records in the database
+        int capacity;             // Maximum allocated size
+
+    public:
+        Database(string fname);
+        virtual void loadData() = 0;
+        virtual void saveData() = 0;
+        virtual void addRecord() = 0;
+        virtual void displayRecords() = 0;
+        virtual void updateRecord() = 0;
+        virtual void deleteRecord() = 0;
+        void removeEmptyLines();
+        void setCap();
 };
 
-#endif // DATABASE_H
+#endif
