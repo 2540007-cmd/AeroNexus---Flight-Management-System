@@ -1,20 +1,26 @@
 #ifndef COMPANY_H
 #define COMPANY_H
 
+#include "PlaneDB.h"
+#include "FlightDB.h"
+#include "RecordDB.h"
 #include <string>
 using namespace std;
 
 class Company {
-private:
-    string name;
-    string code;
-public:
-    Company();
-    Company(const string& name, const string& code);
-    void setName(const string& name);
-    string getName() const;
-    void setCode(const string& code);
-    string getCode() const;
+    private:
+        int companyId;
+        string companyName;
+
+        // Dynamic list of PlaneDB objects for this company
+        inline static int planeCount = 0;
+        int no_of_terminals;
+        PlaneDB planeList;
+        FlightDB flightList;
+        
+
+        // Record database for this company
+        RecordDB recordDB;
 };
 
-#endif // COMPANY_H
+#endif
