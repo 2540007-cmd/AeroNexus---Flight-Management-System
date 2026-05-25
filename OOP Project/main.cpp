@@ -1,35 +1,52 @@
 #include <iostream>
-#include "Company.h"
-#include "FlightDB.h"
-#include "PlaneDB.h"
+#include "RecordDB.h"
+
 using namespace std;
 
 int main() {
-    // Create a company
-    Company company("AeroNexus Airlines", "ANX");
-    cout << "Company: " << company.getName() << " (" << company.getCode() << ")" << endl;
+    RecordDB records("records.csv");
 
-    // Create databases
-    FlightDB flightDB;
-    PlaneDB planeDB;
+    int choice;
 
-    // Add some records
-    flightDB.addRecord("Flight 101: JFK to LAX");
-    flightDB.addRecord("Flight 202: ORD to MIA");
+    do
+    {
+        cout << "\n========== RecordDB Test Menu ==========" << endl;
+        cout << "1. Display Records" << endl;
+        cout << "2. Add Record" << endl;
+        cout << "3. Save Data" << endl;
+        cout << "4. Reload Data" << endl;
+        cout << "0. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+        cin.ignore();
 
-    planeDB.addRecord("Boeing 737-800");
-    planeDB.addRecord("Airbus A320");
+        switch (choice)
+        {
+        case 1:
+            records.displayRecords();
+            break;
 
-    // Display records
-    cout << "Flights:" << endl;
-    for (const auto& record : flightDB.getRecords()) {
-        cout << "  " << record << endl;
-    }
+        case 2:
+            records.addRecord();
+            break;
 
-    cout << "Planes:" << endl;
-    for (const auto& record : planeDB.getRecords()) {
-        cout << "  " << record << endl;
-    }
+        case 3:
+            records.saveData();
+            break;
+
+        case 4:
+            records.loadData();
+            break;
+
+        case 0:
+            cout << "Exiting program..." << endl;
+            break;
+
+        default:
+            cout << "Invalid choice. Try again." << endl;
+        }
+
+    } while (choice != 0);
 
     return 0;
 }
