@@ -1,18 +1,11 @@
 #include "PlaneDB.h"
+#include <iostream>
 using namespace std;
 
-PlaneDB::PlaneDB() {}
-
-void PlaneDB::addRecord(const string& record) {
-    records.push_back(record);
-}
-
-void PlaneDB::removeRecord(const string& record) {
-    // Simple implementation, remove first occurrence
-    for (auto it = records.begin(); it != records.end(); ++it) {
-        if (*it == record) {
-            records.erase(it);
-            break;
-        }
-    }
+PlaneDB::PlaneDB(string fname) : Database(fname){
+    setCap(); // Set capacity based on file content
+    modelNo = new string[capacity];
+    serialNo = new int[capacity];
+    fuelCapacity = new float[capacity];
+    status = new bool[capacity];
 }
