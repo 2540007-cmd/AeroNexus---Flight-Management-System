@@ -1,18 +1,13 @@
 #include "FlightDB.h"
+#include <iostream>
 using namespace std;
 
-FlightDB::FlightDB() {}
-
-void FlightDB::addRecord(const string& record) {
-    records.push_back(record);
-}
-
-void FlightDB::removeRecord(const string& record) {
-    // Simple implementation, remove first occurrence
-    for (auto it = records.begin(); it != records.end(); ++it) {
-        if (*it == record) {
-            records.erase(it);
-            break;
-        }
-    }
+FlightDB::FlightDB(string fname) : Database(fname){
+    setCap(); // Set capacity based on file content
+    airport = new string[capacity];
+    destination = new string[capacity];
+    modelno = new string[capacity];
+    distance = new float[capacity];
+    fuelConsumed = new float[capacity];
+    status = new string[capacity];
 }
