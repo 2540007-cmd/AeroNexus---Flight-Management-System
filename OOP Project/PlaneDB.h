@@ -5,14 +5,21 @@
 #include <string>
 using namespace std;
 
-class PlaneDB : public Database {
-private:
-    // Additional members specific to planes
-public:
-    PlaneDB();
-    void addRecord(const string& record) override;
-    void removeRecord(const string& record) override;
-    // Additional methods for plane management
+class PlaneDB : public Database{
+    private:
+        string* modelNo;       // Plane model number/name
+        int* serialNo;         // Plane serial number
+        float* fuelCapacity;   // Plane fuel capacity
+        bool* status;          // true = available, false = unavailable/busy
+
+    public:
+        PlaneDB(string fname);
+        void loadData() override;
+        void saveData() override;
+        void addRecord() override;
+        void displayRecords() override;
+        void updateRecord() override;
+        void deleteRecord() override;
 };
 
-#endif // PLANEDB_H
+#endif
