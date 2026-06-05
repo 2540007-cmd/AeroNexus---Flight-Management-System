@@ -22,7 +22,7 @@ This is a simple Object-Oriented Programming project implementing a flight manag
 To compile and run on Windows:
 
 1. Ensure you have a C++ compiler like g++ or Visual Studio.
-2. Compile: `g++ main.cpp Company.cpp Database.cpp FlightDB.cpp PlaneDB.cpp -o AeroNexus`
+2. Compile: `g++ main.cpp Company.cpp Database.cpp FlightDB.cpp PlaneDB.cpp RecordDB.cpp User.cpp -o AeroNexus`
 3. Run: `./AeroNexus`
 
 ## Usage
