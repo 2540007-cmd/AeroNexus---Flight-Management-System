@@ -13,8 +13,15 @@ void Database::setCap() {
     int cap = 0;
     ifstream file(fileName);
     if (!file.is_open()) {
-        cout << "Error: Could not open file " << fileName << endl;
-        capacity = 100;   // default empty capacity
+        cout << fileName
+             << " not found. Creating new file..."
+             << endl;
+
+        ofstream createFile(fileName);
+        createFile.close();
+
+        capacity = 100;
+        pointer = 0;
         return;
     }
     while (getline(file, line)) {
@@ -25,8 +32,8 @@ void Database::setCap() {
     pointer = cap; // Set pointer to the number of records read
 
     file.close();
-    capacity = cap + 100; 
-    cout << "Capacity set to: " << capacity << endl;
+    capacity = cap; 
+    cout << "File Read!" << endl;
 }
 
 void Database::removeEmptyLines() {
