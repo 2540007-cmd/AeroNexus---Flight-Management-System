@@ -17,6 +17,12 @@ RecordDB::RecordDB(string fname) : Database(fname){
     loadData(); // Load existing data from the file
 }
 
+void RecordDB::setCap() {
+    Database::setCap(); // Call base class method to set capacity
+    capacity += 100; // Add extra space for new records unique to RecordDB
+    cout << "Record capacity set to: " << capacity << endl;
+}
+
 void RecordDB::loadData() {
     // Implement file reading logic to populate the record database
     ifstream file(fileName);
@@ -105,7 +111,7 @@ void RecordDB::addRecord() {
 }
 
 void RecordDB::saveData() {
-    ofstream file("temp.csv");
+    ofstream file("Data_Dependancy/Company_Records/temp.csv");
     if (!file.is_open()) {
         cerr << "Error opening file for writing: " << fileName << endl;
         return;
@@ -120,7 +126,7 @@ void RecordDB::saveData() {
     }
     file.close();
     remove(fileName.c_str()); // Remove old file
-    rename("temp.csv", fileName.c_str()); // Replace old file with new file
+    rename("Data_Dependancy/Company_Records/temp.csv", fileName.c_str()); // Replace old file with new file
     cout << "Data saved successfully to " << fileName << endl;
 }
 

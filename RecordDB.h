@@ -19,6 +19,7 @@ class RecordDB : public Database {
 
     public:
         RecordDB(string fname);
+        void setCap() override;
         void loadData() override;
         void saveData() override;
         void addRecord() override;
