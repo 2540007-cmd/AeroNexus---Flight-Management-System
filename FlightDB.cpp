@@ -10,7 +10,6 @@ FlightDB::FlightDB(string fname, int cap) : Database(fname){
     destination = new string[capacity];
     modelno = new string[capacity];
     distance = new float[capacity];
-    fuelConsumed = new float[capacity];
     status = new string[capacity];
 
     ifstream file(fileName);
@@ -56,8 +55,6 @@ void FlightDB::loadData() {
         getline(ss, data, ',');
         distance[index] = stof(data);
 
-        getline(ss, data, ',');
-        fuelConsumed[index] = stof(data);
 
         getline(ss, data, ',');
         status[index] = data;
@@ -83,7 +80,6 @@ void FlightDB::saveData() {
              << destination[i] << ","
              << modelno[i] << ","
              << distance[i] << ","
-             << fuelConsumed[i] << ","
              << status[i] << endl;
     }
     file.close();
@@ -105,17 +101,52 @@ void FlightDB::addRecord() {
     getline(cin, modelno[pointer]);
     cout << "Enter Flight Distance: ";
     cin >> distance[pointer];
-    cout << "Enter Fuel Consumed: ";
-    cin >> fuelConsumed[pointer];
     cin.ignore(); // Clear the input buffer after reading numeric input
     status[pointer] = "Scheduled"; // Set default status to Scheduled for new records
     cout << "Record added successfully." << endl;
     pointer++;                  // Increment temporary pointer for new record
 }
 
-void FlightDB::updateRecord() {
-    // Implement logic to update an existing record based on user input
+void FlightDB::updateRecord(int index) {
+    index--; // Adjust index for 0-based array
+    if (index < 0 || index >= pointer) {
+        cout << "Invalid record index." << endl;
+        return;
+    }
+    cout << "Enter new Starting Airport: ";
+    getline(cin, airport[index]);
+    cout << "Enter new Destination Airport: ";
+    getline(cin, destination[index]);
+    cout << "Enter new Plane Model Number: ";
+    getline(cin, modelno[index]);
+    cout << "Enter new Flight Distance: ";
+    cin >> distance[index];
+    cin.ignore(); // Clear the input buffer after reading numeric input
+    cout << "Record updated successfully." << endl;
 }
-void FlightDB::deleteRecord() {
-    // Implement logic to delete a record based on user input
+
+void FlightDB::deleteRecord(int index) {
+    index--; // Adjust index for 0-based array
+    if (index < 0 || index >= pointer) {
+        cout << "Invalid record index." << endl;
+        return;
+    }
+    for(int i = index; i < pointer - 1; i++) {
+        airport[i] = airport[i + 1];
+        destination[i] = destination[i + 1];
+        modelno[i] = modelno[i + 1];
+        distance[i] = distance[i + 1];
+        status[i] = status[i + 1];
+    }
+    pointer--; // Decrement pointer to reflect deleted record
+    cout << "Record deleted successfully." << endl;
+}
+
+void FlightDB::displayRecords() {
+    cout << "\n--- Flight Records ---\n" << endl;
+    cout << "S.No.\tAirport\tDestination\tModel No.\tDistance(km)\tStatus" << endl;
+    for (int i = 0; i < pointer; i++) {
+        cout << (i + 1) << "\t" << airport[i] << "\t" << destination[i] << "\t" << modelno[i] << "\t" << distance[i] << "\t" << status[i] << endl;
+    }
+    cout << "\n-----------------------\n" << endl;
 }

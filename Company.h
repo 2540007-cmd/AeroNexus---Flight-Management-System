@@ -16,7 +16,7 @@ class Company : public Database {
         // Dynamic list of PlaneDB objects for this company
         int* planeCount = 0;
         int* no_of_terminals;
-        //PlaneDB planeList;
+        PlaneDB** planeList;
         FlightDB** flightList;
         
 
@@ -29,14 +29,16 @@ class Company : public Database {
         void loadData() override;
         void saveData() override;
         void addRecord() override;
+        void addTerminal(int index);
         void displayRecords() override;
         void displayPastRecords(int index);
         void displayPlaneRecords(int index);
         void displayFlightSchedule(int index);
         void tweakPastRecords(int index);
         void tweakFlightSchedule(int index);
-        void updateRecord() override;
-        void deleteRecord() override;
+        void tweakPlaneRecords(int index);
+        void updateRecord(int index) override;
+        void deleteRecord(int index) override;
 };
 
 #endif

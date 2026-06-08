@@ -24,8 +24,8 @@ class RecordDB : public Database {
         void saveData() override;
         void addRecord() override;
         void displayRecords() override;
-        void updateRecord() override;
-        void deleteRecord() override;
+        void updateRecord(int index) override;
+        void deleteRecord(int index) override;
 };
 
 #endif

@@ -13,8 +13,7 @@ class FlightDB : public Database{
         string* modelno;     // Plane model number used in this flight
 
         float* distance;        // Flight distance
-        float* fuelConsumed;    // Fuel consumed during flight
-
+        
         string* status;         // Scheduled only
     public:
         FlightDB(string fname, int cap);
@@ -22,8 +21,8 @@ class FlightDB : public Database{
         void saveData() override;
         void addRecord() override;
         void displayRecords() override;
-        void updateRecord() override;
-        void deleteRecord() override;
+        void updateRecord(int index) override;
+        void deleteRecord(int index) override;
 };
 
 #endif

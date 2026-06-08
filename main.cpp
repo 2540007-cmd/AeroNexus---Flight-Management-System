@@ -74,13 +74,17 @@ int main() {
 
     do
     {
-        cout << "\n========== CompanyDB Test Menu ==========\n";
+        cout << "\n========== CompanyDB Menu ==========\n";
         cout << "1. Display Companies\n";
         cout << "2. Add Company\n";
         cout << "3. Save Companies\n";
         cout << "4. Reload Companies\n";
-        cout << "5. Display Company's Past Records\n";
-        cout << "6. Tweak a Company's Records\n";
+        cout << "5. Display Company's Flight Schedule\n";
+        cout << "6. Display Company's Plane Records\n";
+        cout << "7. Display Company's Past Records\n";
+        cout << "8. Tweak a Company's Flight Schedule\n";
+        cout << "9. Tweak a Company's Plane Records\n";
+        cout << "10. Tweak a Company's Past Records\n";
         cout << "0. Exit\n";
         cout << "Enter your choice: ";
 
@@ -107,29 +111,63 @@ int main() {
 
             case 5:
             {
-                int index;
-
-                companies.displayRecords();
+                
 
                 cout << "\nEnter Company Index: ";
-                cin >> index;
+                cin >> choice;
                 cin.ignore();
 
-                companies.displayPastRecords(index - 1); // Display past records for the specified company index
+                companies.displayFlightSchedule(choice); // Display flight schedule for the specified company index
 
                 break;
             }
             case 6:
             {
-                int companyIndex;
-
-                companies.displayRecords();
-
-                cout << "\nSelect Company Index: ";
-                cin >> companyIndex;
+                cout << "\nEnter Company Index: ";
+                cin >> choice;
                 cin.ignore();
 
-                companies.tweakRecords(companyIndex - 1);
+                companies.displayPlaneRecords(choice); // Display plane records for the specified company index
+
+                break;
+            }
+            case 7:
+            {
+                cout << "\nEnter Company Index: ";
+                cin >> choice;
+                cin.ignore();
+
+                companies.displayPastRecords(choice); // Display past records for the specified company index
+
+                break;
+            }
+            case 8:
+            {
+                cout << "\nSelect Company Index: ";
+                cin >> choice;
+                cin.ignore();
+
+                companies.tweakFlightSchedule(choice);
+
+                break;
+            }
+            case 9:
+            {
+                cout << "\nSelect Company Index: ";
+                cin >> choice;
+                cin.ignore();
+
+                companies.tweakPlaneRecords(choice);
+
+                break;
+            }
+            case 10:
+            {
+                cout << "\nSelect Company Index: ";
+                cin >> choice;
+                cin.ignore();
+
+                companies.tweakPastRecords(choice);
 
                 break;
             }

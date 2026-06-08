@@ -10,16 +10,17 @@ class PlaneDB : public Database{
         string* modelNo;       // Plane model number/name
         int* serialNo;         // Plane serial number
         float* fuelCapacity;   // Plane fuel capacity
-        bool* status;          // true = available, false = unavailable/busy
+        string* status;          // true = available, false = unavailable/busy
 
     public:
         PlaneDB(string fname);
-        // void loadData() override;
-        // void saveData() override;
-        // void addRecord() override;
-        // void displayRecords() override;
-        // void updateRecord() override;
-        // void deleteRecord() override;
+        void loadData() override;
+        void saveData() override;
+        void setCap() override;
+        void addRecord() override;
+        void displayRecords() override;
+        void updateRecord(int index) override;
+        void deleteRecord(int index) override;
 };
 
 #endif

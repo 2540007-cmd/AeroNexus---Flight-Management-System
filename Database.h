@@ -17,8 +17,8 @@ class Database{
         virtual void saveData() = 0;
         virtual void addRecord() = 0;
         virtual void displayRecords() = 0;
-        virtual void updateRecord() = 0;
-        virtual void deleteRecord() = 0;
+        virtual void updateRecord(int index) = 0;
+        virtual void deleteRecord(int index) = 0;
         void removeEmptyLines();
         virtual void setCap();
 };

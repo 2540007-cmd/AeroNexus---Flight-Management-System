@@ -33,6 +33,16 @@ Company::Company(string fname) : Database(fname) {
     for(int i = 0; i < pointer; i++) {
         flightList[i] = new FlightDB("Data_Dependancy/Company_Flights/" + companyName[i] + "_flights.csv", no_of_terminals[i]); // Initialize each flight database with their won unique file name based on the company name and capacity based on the number of terminals
     }
+
+    planeList = new PlaneDB*[capacity];
+
+    for(int i = 0; i < capacity; i++) {
+        planeList[i] = nullptr;
+    }
+
+    for(int i = 0; i < pointer; i++) {
+        planeList[i] = new PlaneDB("Data_Dependancy/Company_Planes/" + companyName[i] + "_planes.csv"); // Initialize each plane database with their won unique file name based on the company name
+    }
 }
 
 void Company::setCap() {
@@ -117,7 +127,7 @@ void Company::addRecord() {
     cin >> planeCount[pointer];
     cout << "Enter Number of Terminals: ";
     cin >> no_of_terminals[pointer];
-    
+    cin.ignore(); // Clear the input buffer
     // Initialize a new record database for this company
     recordlist[pointer] = new RecordDB("Data_Dependancy/Company_Records/" + companyName[pointer] + "_records.csv");
     
@@ -126,27 +136,34 @@ void Company::addRecord() {
 }
 void Company::displayRecords() {
     cout << "\n========== CURRENT Companies ==========" << endl;
+    cout << "S.No.\tCompany Name\tNumber of Planes\tNumber of Terminals" << endl;
     for (int i = 0; i < pointer; i++) {
-        cout << "ID: " << companyId[i] << endl
-             << "Name: " << companyName[i] << endl
-             << "Planes: " << planeCount[i] << endl
-             << "Terminals: " << no_of_terminals[i] << endl;
+        cout << i + 1 << "\t" << companyName[i] << "\t\t" << planeCount[i] << "\t\t\t" << no_of_terminals[i] << endl;
     }
     cout << "\n=====================================\n" << endl;
 }
 void Company::displayPastRecords(int index) {
+    index--;
     cout << "\n--- Past Flight Records for Company: " << companyName[index] << " ---" << endl;
     recordlist[index]->displayRecords(); // Display records for the specified company's record database
 }
 void Company::displayFlightSchedule(int index) {
+    index--;
     cout << "\n--- Flight Schedule for Company: " << companyName[index] << " ---" << endl;
     flightList[index]->displayRecords(); // Display flight records for the specified company's flight database
 }
 void Company::displayPlaneRecords(int index) {
-    // Implement logic to display plane records for the specified company
+    index--;
+    cout << "\n--- Plane Records for Company: " << companyName[index] << " ---" << endl;
+    planeList[index]->displayRecords(); // Display plane records for the specified company
 }
 
 void Company::tweakPastRecords(int index) {
+    index --; // Adjust index for 0-based array
+    if (index < 0 || index >= pointer) {
+        cout << "Invalid company index." << endl;
+        return;
+    }
     int choice;
 
     do {
@@ -174,11 +191,17 @@ void Company::tweakPastRecords(int index) {
                 break;
 
             case 3:
-                recordlist[index]->updateRecord();
+                cout << "Enter the record number to update: ";
+                cin >> choice;
+                cin.ignore();
+                recordlist[index]->updateRecord(choice);
                 break;
 
             case 4:
-                recordlist[index]->deleteRecord();
+                cout << "Enter the record number to delete: ";
+                cin >> choice;
+                cin.ignore();
+                recordlist[index]->deleteRecord(choice);
                 break;
 
             case 5:
@@ -192,13 +215,16 @@ void Company::tweakPastRecords(int index) {
             default:
                 cout << "Invalid choice." << endl;
         }
-
     } while(choice != 0);
 
 }
 
 void Company::tweakFlightSchedule(int index) {
-    // Implement logic to display flight schedule for the specified company
+    index --; // Adjust index for 0-based array
+    if (index < 0 || index >= pointer) {
+        cout << "Invalid company index." << endl;
+        return;
+    }
     int choice;
 
     do {
@@ -226,11 +252,17 @@ void Company::tweakFlightSchedule(int index) {
                 break;
 
             case 3:
-                flightList[index]->updateRecord();
+                cout << "Enter the flight number to update: ";
+                cin >> choice;
+                cin.ignore();
+                flightList[index]->updateRecord(choice);
                 break;
 
             case 4:
-                flightList[index]->deleteRecord();
+                cout << "Enter the flight number to delete: ";
+                cin >> choice;
+                cin.ignore();
+                flightList[index]->deleteRecord(choice);
                 break;
 
             case 5:
@@ -247,9 +279,107 @@ void Company::tweakFlightSchedule(int index) {
     } while (choice != 0);
 }
 
-void Company::updateRecord() {
-    // Implement logic to update a company record
+void Company::tweakPlaneRecords(int index) {
+    index --; // Adjust index for 0-based array
+    if (index < 0 || index >= pointer) {
+        cout << "Invalid company index." << endl;
+        return;
+    }
+    int choice;
+
+    do {
+        cout << "\n========== Plane Database MENU ==========\n";
+        cout << "Company: " << companyName[index] << endl;
+        cout << "\t1. Display Database\n";
+        cout << "\t2. Add Plane\n";
+        cout << "\t3. Update Plane\n";
+        cout << "\t4. Delete Plane\n";
+        cout << "\t5. Save Records\n";
+        cout << "\t0. Return\n";
+        
+        cout << "Enter choice: ";
+
+        cin >> choice;
+        cin.ignore();
+
+        switch(choice)
+        {
+            case 1:
+                planeList[index]->displayRecords();
+                break;
+
+            case 2:
+                planeList[index]->addRecord();
+                planeCount[index]++; // Increment plane count for this company
+                break;
+
+            case 3:
+                cout << "Enter the plane number to update: ";
+                cin >> choice;
+                cin.ignore();
+                planeList[index]->updateRecord(choice);
+                break;
+
+            case 4:
+                cout << "Enter the plane number to delete: ";
+                cin >> choice;
+                cin.ignore();
+                planeList[index]->deleteRecord(choice);
+                planeCount[index]--; // Decrement plane count for this company
+                break;
+
+            case 5:
+                planeList[index]->saveData();
+                break;
+
+            case 0:
+                cout << "Returning..." << endl;
+                break;
+
+            default:
+                cout << "Invalid choice." << endl;
+        }
+    } while (choice != 0);
 }
-void Company::deleteRecord() {
-    // Implement logic to delete a company record
+
+void Company::updateRecord(int index) {
+    index--; // Adjust index for 0-based array
+    if (index < 0 || index >= pointer) {
+        cout << "Invalid record index." << endl;
+        return;
+    }
+    cout << "Enter new Company Name: ";
+    getline(cin, companyName[index]);
+    cout << "Enter new Number of Planes: ";
+    cin >> planeCount[index];
+    cout << "Enter new Number of Terminals: ";
+    cin >> no_of_terminals[index];
+    cin.ignore(); // Clear the input buffer after reading numeric input
+    cout << "Company record updated successfully." << endl;
+}
+
+void Company::deleteRecord(int index) {
+    index--; // Adjust index for 0-based array
+    if (index < 0 || index >= pointer) {
+        cout << "Invalid record index." << endl;
+        return;
+    }
+    for(int i = index; i < pointer - 1; i++) {
+        companyId[i] = companyId[i + 1];
+        companyName[i] = companyName[i + 1];
+        planeCount[i] = planeCount[i + 1];
+        no_of_terminals[i] = no_of_terminals[i + 1];
+    }
+    pointer--; // Decrement pointer to reflect deleted record
+    cout << "Record deleted successfully." << endl;
+}
+
+void Company::addTerminal(int index) {
+    index--; // Adjust index for 0-based array
+    if (index < 0 || index >= pointer) {
+        cout << "Invalid company index." << endl;
+        return;
+    }
+    no_of_terminals[index]++;
+    cout << "Terminal successfully incremented." << endl;
 }
