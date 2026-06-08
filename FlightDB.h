@@ -18,12 +18,12 @@ class FlightDB : public Database{
         string* status;         // Scheduled only
     public:
         FlightDB(string fname, int cap);
-        // void loadData() override;
-        // void saveData() override;
-        // void addRecord() override;
-        // void displayRecords() override;
-        // void updateRecord() override;
-        // void deleteRecord() override;
+        void loadData() override;
+        void saveData() override;
+        void addRecord() override;
+        void displayRecords() override;
+        void updateRecord() override;
+        void deleteRecord() override;
 };
 
 #endif

@@ -17,7 +17,7 @@ class Company : public Database {
         int* planeCount = 0;
         int* no_of_terminals;
         //PlaneDB planeList;
-        //FlightDB flightList;
+        FlightDB** flightList;
         
 
         // Record database for this company
@@ -32,8 +32,9 @@ class Company : public Database {
         void displayRecords() override;
         void displayPastRecords(int index);
         void displayPlaneRecords(int index);
-        void displayFlightRecords(int index);
-        void tweakRecords(int index);
+        void displayFlightSchedule(int index);
+        void tweakPastRecords(int index);
+        void tweakFlightSchedule(int index);
         void updateRecord() override;
         void deleteRecord() override;
 };

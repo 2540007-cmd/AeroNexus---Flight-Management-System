@@ -20,9 +20,18 @@ Company::Company(string fname) : Database(fname) {
         recordlist[i] = nullptr;
     }
 
-    recordlist = new RecordDB*[capacity]; // Initialize the array of record databases for the entire companyDB
     for(int i = 0; i < pointer; i++) {
         recordlist[i] = new RecordDB("Data_Dependancy/Company_Records/" + companyName[i] + "_records.csv"); // Initialize each record database with their won unique file name based on the company name
+    }
+    
+    flightList = new FlightDB*[capacity];
+    
+    for(int i = 0; i < capacity; i++) {
+        flightList[i] = nullptr;
+    }
+
+    for(int i = 0; i < pointer; i++) {
+        flightList[i] = new FlightDB("Data_Dependancy/Company_Flights/" + companyName[i] + "_flights.csv", no_of_terminals[i]); // Initialize each flight database with their won unique file name based on the company name and capacity based on the number of terminals
     }
 }
 
@@ -129,8 +138,15 @@ void Company::displayPastRecords(int index) {
     cout << "\n--- Past Flight Records for Company: " << companyName[index] << " ---" << endl;
     recordlist[index]->displayRecords(); // Display records for the specified company's record database
 }
+void Company::displayFlightSchedule(int index) {
+    cout << "\n--- Flight Schedule for Company: " << companyName[index] << " ---" << endl;
+    flightList[index]->displayRecords(); // Display flight records for the specified company's flight database
+}
+void Company::displayPlaneRecords(int index) {
+    // Implement logic to display plane records for the specified company
+}
 
-void Company::tweakRecords(int index) {
+void Company::tweakPastRecords(int index) {
     int choice;
 
     do {
@@ -180,6 +196,57 @@ void Company::tweakRecords(int index) {
     } while(choice != 0);
 
 }
+
+void Company::tweakFlightSchedule(int index) {
+    // Implement logic to display flight schedule for the specified company
+    int choice;
+
+    do {
+        cout << "\n========== FLIGHT SCHEDULE MENU ==========\n";
+        cout << "Company: " << companyName[index] << endl;
+        cout << "\t1. Display Schedule\n";
+        cout << "\t2. Add Flight\n";
+        cout << "\t3. Update Flight\n";
+        cout << "\t4. Delete Flight\n";
+        cout << "\t5. Save Records\n";
+        cout << "\t0. Return\n";
+        
+        cout << "Enter choice: ";
+
+        cin >> choice;
+        cin.ignore();
+        switch(choice)
+        {
+            case 1:
+                flightList[index]->displayRecords();
+                break;
+
+            case 2:
+                flightList[index]->addRecord();
+                break;
+
+            case 3:
+                flightList[index]->updateRecord();
+                break;
+
+            case 4:
+                flightList[index]->deleteRecord();
+                break;
+
+            case 5:
+                flightList[index]->saveData();
+                break;
+
+            case 0:
+                cout << "Returning..." << endl;
+                break;
+
+            default:
+                cout << "Invalid choice." << endl;
+        } 
+    } while (choice != 0);
+}
+
 void Company::updateRecord() {
     // Implement logic to update a company record
 }
